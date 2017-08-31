@@ -4,11 +4,11 @@
   "description": "A parser for NTP UDP packets",
   "main": "dist/index.js",
   "scripts": {
-    "prepublishOnly": "yarn prettier:lint",
+    "prepublishOnly": "yarn prettier:lint && yarn build",
     "test": "mocha --compilers js:babel-core/register --recursive test",
     "build": "babel --presets babel-preset-es2015 --out-dir dist src && prettier --write dist/**/*.js",
     "prettier": "prettier --write src/**/*.js test/**/*.js",
-    "prettier:lint": "prettier --list-different index.js"
+    "prettier:lint": "prettier --list-different src/**/*.js"
   },
   "keywords": [
     "ntp",
