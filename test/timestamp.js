@@ -1,5 +1,5 @@
 const assert = require("assert");
-import NtpPacketParser from "../index";
+import NtpPacketParser from "../src/index";
 
 describe("NTP timestamps", function() {
   describe("Error handling", function() {
