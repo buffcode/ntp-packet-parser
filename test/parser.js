@@ -4,56 +4,7 @@ import NtpPacketParser from "../index";
 
 describe("NTP packet parser", function() {
   describe("Structure", function() {
-    const validPacket = new Buffer([
-      28,
-      1,
-      48,
-      234,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      70,
-      80,
-      84,
-      66,
-      0,
-      221,
-      81,
-      98,
-      144,
-      122,
-      240,
-      131,
-      160,
-      48,
-      48,
-      48,
-      48,
-      48,
-      48,
-      48,
-      10,
-      221,
-      81,
-      98,
-      150,
-      72,
-      91,
-      119,
-      135,
-      221,
-      81,
-      98,
-      150,
-      72,
-      95,
-      235,
-      26
-    ]);
+    const validPacket = require("./packets.valid")[0].buffer;
 
     it("should parse without errors", function() {
       NtpPacketParser.parse(validPacket);
@@ -153,7 +104,6 @@ describe("NTP packet parser", function() {
   const validPackets = require("./packets.valid.js");
   validPackets.forEach(function(packet) {
     describe("Parsing", function() {
-      // generisch Buffer und Struct ableichen
       const struct = NtpPacketParser.parse(packet.buffer);
 
       for (let key in packet.expected) {
@@ -161,7 +111,7 @@ describe("NTP packet parser", function() {
           continue;
         }
 
-        it("should have the propety " + key, function() {
+        it("should have the property " + key, function() {
           assert.ok(key in struct);
         });
 
