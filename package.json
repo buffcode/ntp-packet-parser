@@ -1,0 +1,30 @@
+{
+  "name": "ntp-packet-parser",
+  "version": "0.1",
+  "description": "A parser for NTP UDP packets",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel-core/register --recursive test",
+    "build": "babel index.js --presets babel-preset-es2015 --out-dir dist && prettier --write dist/index.js",
+    "prettier": "prettier --write index.js test/**/*.js test/**/*.json",
+    "prettier:lint": "prettier --list-different index.js"
+  },
+  "keywords": [
+    "ntp",
+    "clock",
+    "sync",
+    "parser",
+    "udp"
+  ],
+  "author": "Laurens Stötzel",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/buffcode/ntp-packet-parser.git"
+  },
+  "devDependencies": {
+    "babel-cli": "6",
+    "babel-preset-es2015": "6",
+    "mocha": "^3.5.0",
+    "prettier": "^1.6.1"
+  }
+}
