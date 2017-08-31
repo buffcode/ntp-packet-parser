@@ -1,7 +1,6 @@
 ![NPM downloads](https://img.shields.io/npm/dt/ntp-packet-parser.svg)
-![Travis](https://img.shields.io/travis/buffcode/npm-packet-parser.svg)
+[![Build Status](https://travis-ci.org/buffcode/ntp-packet-parser.svg?branch=master)](https://travis-ci.org/buffcode/ntp-packet-parser)
 ![GitHub release](https://img.shields.io/github/release/buffcode/npm-packet-parser.svg)
-![Dependencies](https://img.shields.io/david/buffcode/npm-packet-parser.svg)
 
 # NTP packet parser
 
