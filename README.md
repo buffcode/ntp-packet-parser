@@ -38,8 +38,8 @@ The response from `NtpPacketParser.parse` will always return the following objec
 | version | `Integer` | NTP version number, currently 4 |
 | mode | `Integer` | Request/response mode |
 | stratum | `Integer` | Stratum of the server |
-| poll | `Integer` | Integer representing the maximum interval between successive messages (Note: you need to apply `Math.log2` to get the real value) |
-| precision | `Integer` | Integer representing the precision of the system clock (Note: you need to apply `Math.log2` to get the real value) |
+| poll | `Integer` | Integer representing the maximum interval in log2 seconds between successive messages (Note: you need to apply `Math.pow(2, <value>)` to get the real value) |
+| precision | `Integer` | Integer representing the precision of the system clock in log2 seconds (Note: you need to apply `Math.pow(2, <value>)` to get the real value) |
 | rootDelay | `Date` | Total round-trip delay to the reference clock |
 | rootDispersion | `Date` | Total dispersion to the reference clock |
 | referenceId | `String` | String to identify the particular server or reference clock |
