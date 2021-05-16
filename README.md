@@ -1,11 +1,13 @@
 ![NPM downloads](https://img.shields.io/npm/dt/ntp-packet-parser.svg)
-[![Build Status](https://travis-ci.org/buffcode/ntp-packet-parser.svg?branch=master)](https://travis-ci.org/buffcode/ntp-packet-parser)
-![GitHub release](https://img.shields.io/github/release/buffcode/npm-packet-parser.svg)
+[![Build Status](https://github.com/buffcode/ntp-packet-parser/actions/workflows/nodejs.yml/badge.svg)](https://github.com/buffcode/ntp-packet-parser/actions)
+![NPM version](https://img.shields.io/npm/v/ntp-packet-parser)
 
 # NTP packet parser
 
 Library to parse NTP response packets according to [RFC 5905](https://www.ietf.org/rfc/rfc5905.txt) into a easy-to-use structure.
-It does not apply any validations or calculations regarding the time but solely parses the data. 
+It does not apply any validations or calculations regarding the time but solely parses the data.
+
+See [buffcode/ntp-time-sync](https://github.com/buffcode/ntp-time-sync) for an implementation.
 
 ## Installation
 ```bash
