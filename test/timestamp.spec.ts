@@ -1,5 +1,6 @@
+import { NtpPacketParser } from "../src";
+
 const assert = require("assert");
-import NtpPacketParser from "../src/index";
 
 describe("NTP timestamps", function() {
   describe("Error handling", function() {
@@ -32,7 +33,9 @@ describe("NTP timestamps", function() {
 
     it("should return Jan 01 1901 GMT for one year in seconds", function() {
       const oneYear =
-        (new Date("Jan 01 1901 GMT") - new Date("Jan 01 1900 GMT")) / 1000;
+        (new Date("Jan 01 1901 GMT").getTime() -
+          new Date("Jan 01 1900 GMT").getTime()) /
+        1000;
       let oneYearAsBits = (oneYear >>> 0).toString(2);
       oneYearAsBits =
         "0".repeat(32).substr(0, 32 - oneYearAsBits.length) + oneYearAsBits;

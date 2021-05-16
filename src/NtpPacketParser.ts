@@ -1,82 +1,60 @@
-"use strict";
+import { PacketStruct } from "./PacketStruct";
+import { NtpPacket } from "./NtpPacket";
 
-/**
- * @typedef {Object} NTPPacket
- * @property {int} leapIndicator
- * @property {int} version
- * @property {int} mode
- * @property {int} stratum
- * @property {int} poll
- * @property {int} precision
- * @property {Date} rootDelay
- * @property {Date} rootDispersion
- * @property {String} referenceId
- * @property {Date} referenceTimestamp
- * @property {Date} originTimestamp
- * @property {Date} receiveTimestamp
- * @property {Date} transmitTimestamp
- */
-
-export default class NtpPacketParser {
+export class NtpPacketParser {
   /**
    * Returns the structure of the UDP packet for parsing
-   * @returns {Object}
    */
-  static get packetStruct() {
+  private static get packetStruct() {
     return [
-      { name: "leapIndicator", bits: 2 },
-      { name: "version", bits: 3 },
-      { name: "mode", bits: 3 },
-      { name: "stratum", bits: 8 },
-      { name: "poll", bits: 8 },
-      { name: "precision", bits: 8 },
+      { name: "leapIndicator", bits: 2 } as PacketStruct<"leapIndicator">,
+      { name: "version", bits: 3 } as PacketStruct<"version">,
+      { name: "mode", bits: 3 } as PacketStruct<"mode">,
+      { name: "stratum", bits: 8 } as PacketStruct<"stratum">,
+      { name: "poll", bits: 8 } as PacketStruct<"poll">,
+      { name: "precision", bits: 8 } as PacketStruct<"precision">,
       {
         name: "rootDelay",
         bits: 32,
         converter: NtpPacketParser._fromNtpTimestamp
-      },
+      } as PacketStruct<"rootDelay">,
       {
         name: "rootDispersion",
         bits: 32,
         converter: NtpPacketParser._fromNtpTimestamp
-      },
+      } as PacketStruct<"rootDispersion">,
       {
         name: "referenceId",
         bits: 32,
-        converter: (v, s) => this._ntpIdentifier(s.stratum, v)
-      },
+        converter: (value, packet) => this._ntpIdentifier(packet.stratum, value)
+      } as PacketStruct<"referenceId">,
       {
         name: "referenceTimestamp",
         bits: 64,
         converter: NtpPacketParser._fromNtpTimestamp
-      },
+      } as PacketStruct<"referenceTimestamp">,
       {
         name: "originTimestamp",
         bits: 64,
         converter: NtpPacketParser._fromNtpTimestamp
-      },
+      } as PacketStruct<"originTimestamp">,
       {
         name: "receiveTimestamp",
         bits: 64,
         converter: NtpPacketParser._fromNtpTimestamp
-      },
+      } as PacketStruct<"receiveTimestamp">,
       {
         name: "transmitTimestamp",
         bits: 64,
         converter: NtpPacketParser._fromNtpTimestamp
-      }
+      } as PacketStruct<"transmitTimestamp">
     ];
   }
 
   /**
    * Returns the selected bits in binary notation
-   * @param msg
-   * @param {int} start
-   * @param {int} length
-   * @returns {string} Bits in binary notation
-   * @private
    */
-  static _getBits(msg, start, length) {
+  private static _getBits(msg: Buffer, start: number, length: number): string {
     let bits = "";
     const pad = "00000000";
 
@@ -90,12 +68,9 @@ export default class NtpPacketParser {
 
   /**
    * Converts a NTP identifier from binary notation to ASCII
-   * @param {int} stratum
-   * @param {String} value Bits in binary notation
-   * @returns {string}
-   * @private
+   * @param {string} value Bits in binary notation
    */
-  static _ntpIdentifier(stratum, value) {
+  private static _ntpIdentifier(stratum: number, value: string): string {
     if (stratum != 1) {
       return parseInt(value, 2).toString();
     }
@@ -115,11 +90,9 @@ export default class NtpPacketParser {
 
   /**
    * Converts a NTP timestamp from binary notation to a Date object
-   * @param {String} value Bits in binary notation
-   * @returns {Date}
-   * @private
+   * @param {string} value Bits in binary notation
    */
-  static _fromNtpTimestamp(value) {
+  public static _fromNtpTimestamp(value: string): Date {
     if (value.length % 2 !== 0) {
       throw new Error(
         "Invalid timestamp format, expected even number of characters"
@@ -135,25 +108,26 @@ export default class NtpPacketParser {
   }
 
   /**
-   * Parses an UDP packet buffer and returns a NTPPacket struct
-   * @param {Buffer} udpPacket
-   * @returns {NTPPacket}
+   * Parses an UDP packet buffer and returns a NtpPacket struct
    */
-  static parse(udpPacket) {
-    let data = [];
-    NtpPacketParser.packetStruct.forEach(item => {
-      data[item.name] = undefined;
-    });
-
+  public static parse(udpPacket: Buffer): Partial<NtpPacket> {
+    let data: Partial<NtpPacket> = {};
     let offset = 0;
-    NtpPacketParser.packetStruct.forEach(item => {
-      data[item.name] = NtpPacketParser._getBits(udpPacket, offset, item.bits);
-      if (item.converter) {
-        data[item.name] = item.converter(data[item.name], data);
+
+    NtpPacketParser.packetStruct.forEach(struct => {
+      const baseRepresentation = NtpPacketParser._getBits(
+        udpPacket,
+        offset,
+        struct.bits
+      );
+      if (struct.converter) {
+        // @ts-ignore
+        data[struct.name] = struct.converter(baseRepresentation, data);
       } else {
-        data[item.name] = parseInt(data[item.name], 2);
+        // @ts-ignore
+        data[struct.name] = parseInt(baseRepresentation, 2);
       }
-      offset += item.bits;
+      offset += struct.bits;
     });
 
     return data;

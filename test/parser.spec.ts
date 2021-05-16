@@ -1,6 +1,7 @@
 /*jshint mocha*/
+import { NtpPacketParser } from "../src";
+
 const assert = require("assert");
-import NtpPacketParser from "../src/index";
 
 describe("NTP packet parser", function() {
   describe("Structure", function() {

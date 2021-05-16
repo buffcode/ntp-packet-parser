@@ -15,7 +15,7 @@ yarn add ntp-packet-parser
 ## Usage
 ### ES6 style
 ```js
-import NtpPacketParser from "ntp-packet-parser";
+import { NtpPacketParser } from "ntp-packet-parser";
 
 /** const udpPacket = new Buffer(...); **/
 const result = NtpPacketParser.parse(udpPacket);
@@ -23,14 +23,14 @@ const result = NtpPacketParser.parse(udpPacket);
 
 ### Legacy style
 ```js
-var NtpPacketParser = require("ntp-packet-parser");
+var NtpPacketParser = require("ntp-packet-parser").NtpPacketParser;
 
 /** const udpPacket = new Buffer(...); **/
 var result = NtpPacketParser.parse(udpPacket);
 ```
 
 ## Structure
-The response from `NtpPacketParser.parse` will always return the following object structure:
+The response from `NtpPacketParser.parse` will return the following object structure:
 
 | Property | Type | Description |
 | :--- | :--- | :--- |
