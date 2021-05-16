@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Node.js build
 
 on:
   push:
@@ -8,13 +8,10 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: ['10', '12', '14', '16']
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -31,5 +28,7 @@ jobs:
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build
       - name: Test
         run: yarn test
