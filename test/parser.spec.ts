@@ -3,15 +3,15 @@ import { NtpPacketParser } from "../src";
 
 const assert = require("assert");
 
-describe("NTP packet parser", function() {
-  describe("Structure", function() {
+describe("NTP packet parser", function () {
+  describe("Structure", function () {
     const validPacket = require("./packets.valid")[0].buffer;
 
-    it("should parse without errors", function() {
+    it("should parse without errors", function () {
       NtpPacketParser.parse(validPacket);
     });
 
-    it("should return a full struct", function() {
+    it("should return a full struct", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok("leapIndicator" in struct);
@@ -29,73 +29,73 @@ describe("NTP packet parser", function() {
       assert.ok("transmitTimestamp" in struct);
     });
 
-    it("should return an integer for leapIndicator", function() {
+    it("should return an integer for leapIndicator", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(Number.isInteger(struct.leapIndicator));
     });
 
-    it("should return an integer for mode", function() {
+    it("should return an integer for mode", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(Number.isInteger(struct.mode));
     });
 
-    it("should return an integer for stratum", function() {
+    it("should return an integer for stratum", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(Number.isInteger(struct.stratum));
     });
 
-    it("should return an integer for poll", function() {
+    it("should return an integer for poll", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(Number.isInteger(struct.poll));
     });
 
-    it("should return an integer for precision", function() {
+    it("should return an integer for precision", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(Number.isInteger(struct.precision));
     });
 
-    it("should return a date for rootDelay", function() {
+    it("should return a date for rootDelay", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(struct.rootDelay instanceof Date);
     });
 
-    it("should return a date for rootDispersion", function() {
+    it("should return a date for rootDispersion", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(struct.rootDispersion instanceof Date);
     });
 
-    it("should return a string for referenceId", function() {
+    it("should return a string for referenceId", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(typeof struct.referenceId === "string");
     });
 
-    it("should return a date for referenceTimestamp", function() {
+    it("should return a date for referenceTimestamp", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(struct.referenceTimestamp instanceof Date);
     });
 
-    it("should return a date for originTimestamp", function() {
+    it("should return a date for originTimestamp", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(struct.originTimestamp instanceof Date);
     });
 
-    it("should return a date for receiveTimestamp", function() {
+    it("should return a date for receiveTimestamp", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(struct.receiveTimestamp instanceof Date);
     });
 
-    it("should return a date for transmitTimestamp", function() {
+    it("should return a date for transmitTimestamp", function () {
       const struct = NtpPacketParser.parse(validPacket);
 
       assert.ok(struct.transmitTimestamp instanceof Date);
@@ -103,8 +103,8 @@ describe("NTP packet parser", function() {
   });
 
   const validPackets = require("./packets.valid.js");
-  validPackets.forEach(function(packet) {
-    describe("Parsing", function() {
+  validPackets.forEach(function (packet) {
+    describe("Parsing", function () {
       const struct = NtpPacketParser.parse(packet.buffer);
 
       for (let key in packet.expected) {
@@ -112,23 +112,17 @@ describe("NTP packet parser", function() {
           continue;
         }
 
-        it("should have the property " + key, function() {
+        it("should have the property " + key, function () {
           assert.ok(key in struct);
         });
 
-        it(
-          "should return " + packet.expected[key] + " for property " + key,
-          function() {
-            if (packet.expected[key] instanceof Date) {
-              assert.equal(
-                struct[key].getTime(),
-                packet.expected[key].getTime()
-              );
-            } else {
-              assert.equal(struct[key], packet.expected[key]);
-            }
+        it("should return " + packet.expected[key] + " for property " + key, function () {
+          if (packet.expected[key] instanceof Date) {
+            assert.equal(struct[key].getTime(), packet.expected[key].getTime());
+          } else {
+            assert.equal(struct[key], packet.expected[key]);
           }
-        );
+        });
       }
     });
   });
