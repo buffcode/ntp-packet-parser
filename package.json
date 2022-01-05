@@ -23,7 +23,7 @@
     "url": "https://github.com/buffcode/ntp-packet-parser.git"
   },
   "devDependencies": {
-    "@types/mocha": "^8.2.2",
+    "@types/mocha": "^9.0.0",
     "@types/node": "^15.3.0",
     "mocha": "^8.4.0",
     "prettier": "^2.3.0",
