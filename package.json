@@ -28,7 +28,7 @@
     "mocha": "^8.4.0",
     "prettier": "^2.3.0",
     "ts-mocha": "^8.0.0",
-    "ts-node": "^9.1.1",
+    "ts-node": "^10.4.0",
     "typescript": "^4.2.4"
   },
   "files": [
@@ -40,5 +40,8 @@
   "license": "GPL-3.0",
   "prettier": {
     "printWidth": 120
+  },
+  "engines": {
+    "node": "^12 || ^14 || ^16"
   }
 }
