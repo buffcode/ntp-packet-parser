@@ -1,6 +1,6 @@
 {
   "name": "ntp-packet-parser",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A parser for NTP UDP packets",
   "main": "dist/index.js",
   "scripts": {
