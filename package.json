@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^10.0.0",
-    "@types/node": "^14",
+    "@types/node": "^14 || ^16 || ^18 || ^20",
     "mocha": "^10.1.0",
     "prettier": "^3.0.2",
     "ts-mocha": "^10.0.0",
@@ -43,6 +43,6 @@
     "trailingComma": "es5"
   },
   "engines": {
-    "node": "^14 || ^16 || ^18"
+    "node": "^14 || ^16 || ^18 || ^20"
   }
 }
