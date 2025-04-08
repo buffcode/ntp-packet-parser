@@ -23,13 +23,13 @@
     "url": "https://github.com/buffcode/ntp-packet-parser.git"
   },
   "devDependencies": {
-    "@types/mocha": "^10.0.0",
-    "@types/node": "^14 || ^16 || ^18 || ^20",
-    "mocha": "^11.1.0",
-    "prettier": "^3.0.2",
-    "ts-mocha": "^11.1.0",
-    "ts-node": "^10.4.0",
-    "typescript": "^5.1.6"
+    "@types/mocha": "10.0.10",
+    "@types/node": "^18 || ^20 || ^22",
+    "mocha": "11.1.0",
+    "prettier": "3.5.3",
+    "ts-mocha": "11.1.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.8.3"
   },
   "files": [
     "dist",
@@ -43,6 +43,6 @@
     "trailingComma": "es5"
   },
   "engines": {
-    "node": "^14 || ^16 || ^18 || ^20"
+    "node": "^18 || ^20 || ^22"
   }
 }
