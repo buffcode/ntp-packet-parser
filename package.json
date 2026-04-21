@@ -38,7 +38,7 @@
   "author": "Laurens Stötzel",
   "repository": {
     "type": "git",
-    "url": "https://github.com/buffcode/ntp-packet-parser.git"
+    "url": "git+https://github.com/buffcode/ntp-packet-parser.git"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "1.0.2",
