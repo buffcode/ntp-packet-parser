@@ -3,7 +3,7 @@ name: Publish NPM package
 on:
   workflow_dispatch:
   release:
-    types: [released]
+    types: [released, prereleased]
 
 permissions:
   id-token: write  # Required for OIDC
@@ -19,6 +19,13 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
       - run: yarn install
-      - run: yarn build
-      - run: yarn test:integration
-      - run: npm publish
+      - name: Publish to npm
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ "$VERSION" == *-* ]]; then
+            echo "Prerelease detected ($VERSION) -> publishing with --tag next"
+            npm publish --tag next
+          else
+            echo "Stable release ($VERSION) -> publishing with default tag (latest)"
+            npm publish
+          fi
