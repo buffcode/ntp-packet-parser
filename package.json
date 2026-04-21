@@ -19,7 +19,7 @@
   },
   "scripts": {
     "prepublishOnly": "yarn prettier:lint && yarn build && yarn test:integration",
-    "test": "ts-mocha --recursive test/**/*.spec.ts",
+    "test": "mocha --recursive 'test/**/*.spec.ts'",
     "test:integration": "node test/integration/esm.mjs && node test/integration/cjs.cjs",
     "coverage": "nyc yarn test",
     "build:esm": "tsc --project tsconfig.esm.json && node -e \"require('fs').writeFileSync('dist/esm/package.json', JSON.stringify({type:'module'}))\"",
@@ -48,7 +48,6 @@
     "nyc": "18.0.0",
     "prettier": "3.8.3",
     "source-map-support": "0.5.21",
-    "ts-mocha": "11.1.0",
     "ts-node": "10.9.2",
     "typescript": "6.0.3"
   },
