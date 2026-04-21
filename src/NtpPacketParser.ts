@@ -109,6 +109,7 @@ export class NtpPacketParser {
 
   /**
    * Parses an UDP packet buffer and returns a NtpPacket struct
+   * @throws {TypeError} If `udpPacket` is not a Buffer or Uint8Array, or is not exactly 48 bytes long.
    */
   public static parse(udpPacket: Buffer | Uint8Array): NtpPacket {
     if (!(udpPacket instanceof Uint8Array)) {
