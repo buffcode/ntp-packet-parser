@@ -31,6 +31,9 @@
     "ts-node": "10.9.2",
     "typescript": "5.9.3"
   },
+  "resolutions": {
+    "ts-node/diff": "^4.0.4"
+  },
   "files": [
     "dist",
     "src",
