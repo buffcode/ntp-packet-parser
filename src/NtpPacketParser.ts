@@ -54,7 +54,7 @@ export class NtpPacketParser {
   /**
    * Returns the selected bits in binary notation
    */
-  private static _getBits(msg: Buffer, start: number, length: number): string {
+  private static _getBits(msg: Buffer | Uint8Array, start: number, length: number): string {
     let bits = "";
     const pad = "00000000";
 
@@ -68,10 +68,17 @@ export class NtpPacketParser {
 
   /**
    * Converts a NTP identifier from binary notation to ASCII
-   * @param {string} value Bits in binary notation
+   * @param {number} stratum NTP stratum (0-255), determines decoding rules
+   * @param {string} value 32-bit binary string of the referenceId field
    */
   private static _ntpIdentifier(stratum: number, value: string): string {
-    if (stratum != 1) {
+    if (typeof stratum !== "number" || !Number.isInteger(stratum) || stratum < 0 || stratum > 255) {
+      throw new TypeError("stratum must be an integer in [0, 255]");
+    }
+    if (typeof value !== "string" || !/^[01]{32}$/.test(value)) {
+      throw new TypeError("value must be a 32-bit binary string");
+    }
+    if (stratum !== 1) {
       return parseInt(value, 2).toString();
     }
     let chars = [value.slice(0, 8), value.slice(8, 16), value.slice(16, 24), value.slice(24, 32)];
@@ -85,11 +92,11 @@ export class NtpPacketParser {
 
   /**
    * Converts a NTP timestamp from binary notation to a Date object
-   * @param {string} value Bits in binary notation
+   * @param {string} value Bits in binary notation (32 bits = short format, 64 bits = full timestamp)
    */
   public static _fromNtpTimestamp(value: string): Date {
-    if (value.length % 2 !== 0) {
-      throw new Error("Invalid timestamp format, expected even number of characters");
+    if (typeof value !== "string" || !/^(?:[01]{32}|[01]{64})$/.test(value)) {
+      throw new TypeError("value must be a binary string of length 32 or 64");
     }
 
     const seconds = parseInt(value, 2) / Math.pow(2, value.length / 2),
@@ -103,8 +110,15 @@ export class NtpPacketParser {
   /**
    * Parses an UDP packet buffer and returns a NtpPacket struct
    */
-  public static parse(udpPacket: Buffer): Partial<NtpPacket> {
-    let data: Partial<NtpPacket> = {};
+  public static parse(udpPacket: Buffer | Uint8Array): NtpPacket {
+    if (!(udpPacket instanceof Uint8Array)) {
+      throw new TypeError("udpPacket must be a Buffer or Uint8Array");
+    }
+    if (udpPacket.length !== 48) {
+      throw new TypeError(`udpPacket must be exactly 48 bytes, got ${udpPacket.length}`);
+    }
+
+    const data: Partial<NtpPacket> = {};
     let offset = 0;
 
     NtpPacketParser.packetStruct.forEach((struct) => {
@@ -119,6 +133,6 @@ export class NtpPacketParser {
       offset += struct.bits;
     });
 
-    return data;
+    return data as NtpPacket;
   }
 }

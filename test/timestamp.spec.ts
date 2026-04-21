@@ -7,25 +7,25 @@ describe("NTP timestamps", function () {
     it("should throw an error for invalid values", function () {
       assert.throws(function () {
         NtpPacketParser._fromNtpTimestamp("0");
-      }, /expected even number of characters/);
+      }, /binary string of length 32 or 64/);
       assert.throws(function () {
         NtpPacketParser._fromNtpTimestamp("000");
-      }, /expected even number of characters/);
+      }, /binary string of length 32 or 64/);
     });
 
     it("should not throw an error for valid values", function () {
       assert.doesNotThrow(function () {
-        NtpPacketParser._fromNtpTimestamp("00");
-      }, /expected even number of characters/);
+        NtpPacketParser._fromNtpTimestamp("0".repeat(32));
+      });
       assert.doesNotThrow(function () {
-        NtpPacketParser._fromNtpTimestamp("0000");
-      }, /expected even number of characters/);
+        NtpPacketParser._fromNtpTimestamp("0".repeat(64));
+      });
     });
   });
 
   describe("Conversion", function () {
     it("should return Jan 01 1900 GMT for zero timestamp", function () {
-      assert.equal(NtpPacketParser._fromNtpTimestamp("0".repeat(16)).getTime(), new Date("Jan 01 1900 GMT").getTime());
+      assert.equal(NtpPacketParser._fromNtpTimestamp("0".repeat(32)).getTime(), new Date("Jan 01 1900 GMT").getTime());
     });
 
     it("should return Jan 01 1901 GMT for one year in seconds", function () {
@@ -40,14 +40,12 @@ describe("NTP timestamps", function () {
     });
 
     it("should return 500 milliseconds for fraction of 1", function () {
-      const millisecondsAsBits = (1 >>> 0).toString(2);
+      // Half-second in the 32-bit fraction portion of a 64-bit NTP timestamp is
+      // represented by a single 1 in the MSB of the fraction (value 2^31 / 2^32 = 0.5).
+      const secondsPart = "0".repeat(32);
+      const fractionPart = "1" + "0".repeat(31);
 
-      assert.equal(
-        NtpPacketParser._fromNtpTimestamp(
-          "0".repeat(millisecondsAsBits.length) + millisecondsAsBits
-        ).getUTCMilliseconds(),
-        500
-      );
+      assert.equal(NtpPacketParser._fromNtpTimestamp(secondsPart + fractionPart).getUTCMilliseconds(), 500);
     });
   });
 });
