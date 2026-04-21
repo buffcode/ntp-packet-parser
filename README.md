@@ -1,6 +1,7 @@
-![NPM downloads](https://img.shields.io/npm/dt/ntp-packet-parser.svg)
+[![NPM downloads](https://img.shields.io/npm/dt/ntp-packet-parser.svg)](https://npmtrends.com/ntp-packet-parser)
 [![Build Status](https://github.com/buffcode/ntp-packet-parser/actions/workflows/nodejs.yml/badge.svg)](https://github.com/buffcode/ntp-packet-parser/actions)
-![NPM version](https://img.shields.io/npm/v/ntp-packet-parser)
+[![NPM version](https://img.shields.io/npm/v/ntp-packet-parser)](https://www.npmjs.com/package/ntp-packet-parser)
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/buffcode/ntp-packet-parser)
 
 # NTP packet parser
 
