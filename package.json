@@ -29,7 +29,7 @@
     "prettier": "3.8.3",
     "ts-mocha": "11.1.0",
     "ts-node": "10.9.2",
-    "typescript": "5.9.3"
+    "typescript": "6.0.3"
   },
   "resolutions": {
     "ts-node/diff": "^4.0.4"
