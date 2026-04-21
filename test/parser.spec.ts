@@ -103,9 +103,9 @@ describe("NTP packet parser", function () {
   });
 
   const validPackets = require("./packets.valid.js");
-  validPackets.forEach(function (packet) {
+  validPackets.forEach(function (packet: { buffer: Buffer; expected: Record<string, unknown> }) {
     describe("Parsing", function () {
-      const struct = NtpPacketParser.parse(packet.buffer);
+      const struct = NtpPacketParser.parse(packet.buffer) as unknown as Record<string, unknown>;
 
       for (let key in packet.expected) {
         if (!packet.expected.hasOwnProperty(key)) {
@@ -118,7 +118,7 @@ describe("NTP packet parser", function () {
 
         it("should return " + packet.expected[key] + " for property " + key, function () {
           if (packet.expected[key] instanceof Date) {
-            assert.equal(struct[key].getTime(), packet.expected[key].getTime());
+            assert.equal((struct[key] as Date).getTime(), (packet.expected[key] as Date).getTime());
           } else {
             assert.equal(struct[key], packet.expected[key]);
           }
