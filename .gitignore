@@ -3,3 +3,5 @@
 /dist/
 /*.tgz
 /yarn-error.log
+/coverage/
+/.nyc_output/
