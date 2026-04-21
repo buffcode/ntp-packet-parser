@@ -30,5 +30,7 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn build
-      - name: Test
+      - name: Unit tests
         run: yarn test
+      - name: Integration tests
+        run: yarn test:integration

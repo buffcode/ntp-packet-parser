@@ -1,3 +1,3 @@
-export * from "./NtpPacketParser";
-export * from "./NtpPacket";
-export * from "./PacketStruct";
+export * from "./NtpPacketParser.js";
+export * from "./NtpPacket.js";
+export * from "./PacketStruct.js";

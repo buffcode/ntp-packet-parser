@@ -1,9 +1,15 @@
 {
+  "ts-node": {
+    "preferTsExts": true,
+    "experimentalResolver": true
+  },
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
     "allowJs": true,
     "target": "es2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "types": ["node"],
     "noEmitOnError": true,
     "noImplicitAny": true,
