@@ -26,7 +26,7 @@ export class NtpPacketParser {
       {
         name: "referenceId",
         bits: 32,
-        converter: (value, packet) => this._ntpIdentifier(packet.stratum, value),
+        converter: (value, packet) => this._ntpIdentifier(packet.stratum!, value),
       } as PacketStruct<"referenceId">,
       {
         name: "referenceTimestamp",
