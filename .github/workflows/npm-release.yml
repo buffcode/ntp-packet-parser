@@ -1,15 +1,19 @@
-name: Node.js Package
+name: Publish NPM package
 
 on:
   workflow_dispatch:
   release:
     types: [released]
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
@@ -18,5 +22,3 @@ jobs:
       - run: yarn build
       - run: yarn test:integration
       - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
