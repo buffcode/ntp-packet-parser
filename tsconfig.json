@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
+    "rootDir": "./src",
     "allowJs": true,
-    "target": "es5",
+    "target": "es2020",
+    "types": ["node"],
     "noEmitOnError": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
