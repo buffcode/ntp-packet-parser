@@ -4,6 +4,7 @@
     "module": "ES2022",
     "moduleResolution": "bundler",
     "outDir": "./dist/esm",
-    "declaration": true
+    "declaration": true,
+    "declarationMap": true
   }
 }
