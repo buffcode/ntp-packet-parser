@@ -6,6 +6,7 @@
   "scripts": {
     "prepublishOnly": "yarn prettier:lint && yarn build",
     "test": "ts-mocha --recursive test/**/*.spec.ts",
+    "coverage": "nyc yarn test",
     "build": "tsc",
     "prettier": "prettier --write src/**/*.ts test/**/*.{js,ts}",
     "prettier:lint": "prettier --list-different src/**/*.ts test/**/*.{js,ts}"
@@ -23,10 +24,13 @@
     "url": "https://github.com/buffcode/ntp-packet-parser.git"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/mocha": "10.0.10",
     "@types/node": "^20 || ^22",
     "mocha": "12.0.0-beta-9.2",
+    "nyc": "^18.0.0",
     "prettier": "3.8.3",
+    "source-map-support": "^0.5.21",
     "ts-mocha": "11.1.0",
     "ts-node": "10.9.2",
     "typescript": "6.0.3"
