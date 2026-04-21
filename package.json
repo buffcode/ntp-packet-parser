@@ -2,12 +2,29 @@
   "name": "ntp-packet-parser",
   "version": "0.5.0",
   "description": "A parser for NTP UDP packets",
-  "main": "dist/index.js",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      },
+      "default": "./dist/cjs/index.js"
+    }
+  },
   "scripts": {
-    "prepublishOnly": "yarn prettier:lint && yarn build",
+    "prepublishOnly": "yarn prettier:lint && yarn build && yarn test:integration",
     "test": "ts-mocha --recursive test/**/*.spec.ts",
+    "test:integration": "node test/integration/esm.mjs && node test/integration/cjs.cjs",
     "coverage": "nyc yarn test",
-    "build": "tsc",
+    "build:esm": "tsc --project tsconfig.esm.json && node -e \"require('fs').writeFileSync('dist/esm/package.json', JSON.stringify({type:'module'}))\"",
+    "build:cjs": "tsc --project tsconfig.cjs.json && node -e \"require('fs').writeFileSync('dist/cjs/package.json', JSON.stringify({type:'commonjs'}))\"",
+    "build": "yarn build:esm && yarn build:cjs",
     "prettier": "prettier --write src/**/*.ts test/**/*.{js,ts}",
     "prettier:lint": "prettier --list-different src/**/*.ts test/**/*.{js,ts}"
   },
@@ -42,7 +59,9 @@
     "dist",
     "src",
     "package.json",
-    "tsconfig.json"
+    "tsconfig.json",
+    "tsconfig.esm.json",
+    "tsconfig.cjs.json"
   ],
   "license": "GPL-3.0",
   "prettier": {
