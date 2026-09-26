@@ -1,8 +1,4 @@
 {
-  "ts-node": {
-    "preferTsExts": true,
-    "experimentalResolver": true
-  },
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
