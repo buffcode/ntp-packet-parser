@@ -44,7 +44,7 @@
     "@istanbuljs/nyc-config-typescript": "1.0.2",
     "@types/mocha": "10.0.10",
     "@types/node": "22.19.17",
-    "mocha": "12.0.0-rc.1",
+    "mocha": "12.0.2",
     "nyc": "18.0.0",
     "prettier": "3.9.9",
     "source-map-support": "0.5.21",
