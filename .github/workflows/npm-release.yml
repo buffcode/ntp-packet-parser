@@ -1,31 +1,40 @@
 name: Publish NPM package
 
 on:
-  workflow_dispatch:
   release:
     types: [released, prereleased]
 
 permissions:
-  id-token: write  # Required for OIDC
   contents: read
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Requires approval and only runs on release tags; npm trusts only this environment
+    environment: npm-publish
+    permissions:
+      id-token: write  # Required for OIDC
+      contents: read
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-      - run: yarn install
+          package-manager-cache: false
+      - name: Use npm 12
+        working-directory: ${{ runner.temp }}
+        run: npm install -g npm@12.0.2
+      - run: npm ci
       - name: Publish to npm
         run: |
           VERSION=$(node -p "require('./package.json').version")
           if [[ "$VERSION" == *-* ]]; then
             echo "Prerelease detected ($VERSION) -> publishing with --tag next"
-            npm publish --tag next
+            npm publish --provenance --tag next
           else
             echo "Stable release ($VERSION) -> publishing with default tag (latest)"
-            npm publish
+            npm publish --provenance
           fi

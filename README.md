@@ -12,8 +12,10 @@ See [buffcode/ntp-time-sync](https://github.com/buffcode/ntp-time-sync) for an i
 
 ## Installation
 ```bash
-yarn add ntp-packet-parser
+npm install ntp-packet-parser
 ```
+
+Requires Node.js 22.12+, 24 or 26+.
 
 ## Usage
 ### ES6 style
@@ -62,8 +64,11 @@ For further explanations on the possible values of these properties please refer
 ## Testing
 Some tests regarding structure, response and error handling exist. To run them locally:
 ```js
-yarn test
+npm ci
+npm test
 ```
+
+Development requires npm 12+ (Node.js 22.22.2+, 24.15+ or 26+).
 
 ## Contributing
 Please file a PR against `master`.
