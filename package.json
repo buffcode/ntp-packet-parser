@@ -18,13 +18,13 @@
     }
   },
   "scripts": {
-    "prepublishOnly": "yarn prettier:lint && yarn build && yarn test:integration",
+    "prepublishOnly": "npm run prettier:lint && npm run build && npm run test:integration",
     "test": "tsc --project test/tsconfig.json && mocha --recursive 'test/**/*.spec.ts'",
     "test:integration": "node test/integration/esm.mjs && node test/integration/cjs.cjs",
-    "coverage": "nyc yarn test",
+    "coverage": "nyc npm test",
     "build:esm": "tsc --project tsconfig.esm.json && node -e \"require('fs').writeFileSync('dist/esm/package.json', JSON.stringify({type:'module'}))\"",
     "build:cjs": "tsc --project tsconfig.cjs.json && node -e \"require('fs').writeFileSync('dist/cjs/package.json', JSON.stringify({type:'commonjs'}))\"",
-    "build": "yarn build:esm && yarn build:cjs",
+    "build": "npm run build:esm && npm run build:cjs",
     "prettier": "prettier --write src/**/*.ts test/**/*.{js,ts}",
     "prettier:lint": "prettier --list-different src/**/*.ts test/**/*.{js,ts}"
   },
@@ -46,10 +46,13 @@
     "@types/node": "22.19.17",
     "mocha": "12.0.2",
     "nyc": "18.0.0",
-    "prettier": "3.9.9",
+    "prettier": "3.9.8",
     "source-map-support": "0.5.21",
     "tsx": "4.23.13",
     "typescript": "7.0.2"
+  },
+  "allowScripts": {
+    "esbuild": false
   },
   "files": [
     "dist"
@@ -62,5 +65,12 @@
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": ">=12",
+      "onFail": "error"
+    }
+  },
+  "packageManager": "npm@12.0.2"
 }

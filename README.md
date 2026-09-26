@@ -12,7 +12,7 @@ See [buffcode/ntp-time-sync](https://github.com/buffcode/ntp-time-sync) for an i
 
 ## Installation
 ```bash
-yarn add ntp-packet-parser
+npm install ntp-packet-parser
 ```
 
 ## Usage
@@ -62,7 +62,7 @@ For further explanations on the possible values of these properties please refer
 ## Testing
 Some tests regarding structure, response and error handling exist. To run them locally:
 ```js
-yarn test
+npm test
 ```
 
 ## Contributing
