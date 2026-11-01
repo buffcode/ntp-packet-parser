@@ -26,7 +26,7 @@ jobs:
           package-manager-cache: false
       - name: Use npm 12
         working-directory: ${{ runner.temp }}
-        run: npm install -g npm@12.0.2
+        run: npm install -g npm@12.2.1
       - run: npm ci
       - name: Publish to npm
         run: |
