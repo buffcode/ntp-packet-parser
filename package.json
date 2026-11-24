@@ -51,6 +51,10 @@
     "tsx": "4.23.15",
     "typescript": "7.0.2"
   },
+  "overrides": {
+    "glob": "^14.0.6",
+    "minimatch": "^11.0.1"
+  },
   "allowScripts": {
     "esbuild": false
   },
